@@ -17,19 +17,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public final class ActOfAvailableProblems extends AnAction {
+    private final EjState state = ApplicationManager
+        .getApplication()
+        .getService(EjState.class);
+
     @Override
     public void actionPerformed(final @NotNull AnActionEvent event) {
-        final var state = ApplicationManager
-            .getApplication()
-            .getService(EjState.class);
         final var console = Objects.requireNonNull(
                 event.getProject()
             )
             .getService(ConsoleWindow.class)
             .console();
         new AvailableProblems(
-            new LocOfSettings(state).location(),
-            new CredOfSettings(state).credentials(),
+            new LocOfSettings(this.state).location(),
+            new CredOfSettings(this.state).credentials(),
             new WithReport(
                 new WithoutAnsi(
                     new IntellijConsole(console)

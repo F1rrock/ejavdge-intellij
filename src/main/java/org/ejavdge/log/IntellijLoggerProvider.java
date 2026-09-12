@@ -8,15 +8,9 @@ import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
 public final class IntellijLoggerProvider implements SLF4JServiceProvider {
-
-    private final ILoggerFactory factory =
-        new IntellijLoggerFactory();
-
-    private final IMarkerFactory markers =
-        new BasicMarkerFactory();
-
-    private final MDCAdapter mdc =
-        new BasicMDCAdapter();
+    private final ILoggerFactory factory = new IntellijLoggerFactory();
+    private final IMarkerFactory markers = new BasicMarkerFactory();
+    private final MDCAdapter mdc = new BasicMDCAdapter();
 
     @Override
     public ILoggerFactory getLoggerFactory() {

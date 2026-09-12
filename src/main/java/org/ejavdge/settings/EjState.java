@@ -9,7 +9,9 @@ import org.jetbrains.annotations.NotNull;
     name = "EjSettings",
     storages = @Storage("ejavdge.xml")
 )
+@SuppressWarnings("java:S1104")
 public final class EjState implements PersistentStateComponent<EjState> {
+    private static final String CLIENT_PATH = "/new-client";
     public String baseUrl;
     public int port;
     public String clientPath;
@@ -19,7 +21,7 @@ public final class EjState implements PersistentStateComponent<EjState> {
     public EjState() {
         this.baseUrl = "10.21.17.68";
         this.port = 80;
-        this.clientPath = "/new-client";
+        this.clientPath = CLIENT_PATH;
         this.contestId = 1;
         this.login = "";
     }

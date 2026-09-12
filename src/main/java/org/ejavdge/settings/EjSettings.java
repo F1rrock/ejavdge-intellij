@@ -15,20 +15,15 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public final class EjSettings implements Configurable {
-
     private static final String PASSWORD_KEY = "org.ejavdge.password";
-
     private final EjState state;
-
     private final JBTextField baseUrl;
     private final JBTextField port;
     private final JBTextField clientPath;
     private final JBTextField contestId;
     private final JBTextField login;
     private final JBPasswordField password;
-
     private String savedPassword;
-
     private final JPanel panel;
 
     public EjSettings() {

@@ -6,7 +6,7 @@ import org.slf4j.helpers.AbstractLogger;
 import org.slf4j.Marker;
 
 public final class IntellijLogger extends AbstractLogger {
-    private final Logger origin;
+    private final transient Logger origin;
 
     public IntellijLogger(final String name) {
         this.name = name;
