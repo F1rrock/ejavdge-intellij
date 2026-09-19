@@ -8,7 +8,7 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[IntelliJ IDEA integration for EJavdge.]]></description>
+    <description>IntelliJ IDEA plugin for EJavdge — a thin client for submitting solutions to ejudge, running local tests, and viewing reports.</description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -19,7 +19,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
                 parentId="tools"
-                instance="org.ejavdge.settings.EjSettings"/>
+                instance="org.ejavdge.settings.EjSettings"
+                displayName="EJavdge"/>
         <applicationService
                 serviceImplementation="org.ejavdge.settings.EjState"/>
         <toolWindow
@@ -44,6 +45,15 @@
                     class="org.ejavdge.action.ActOfAvailableProblems"
                     text="Available Problems"
                     description="Show available problem names for the current contest"/>
+            <action
+                    id="EJavdge.ProblemDescription"
+                    class="org.ejavdge.action.ActOfProblemDescription"
+                    text="Problem Description"
+                    description="Show description of current problem (comment like `# problem {PROB_NAME}` is required)"/>
+            <action id="EJavdge.ActOfAlreadySolved"
+                    class="org.ejavdge.action.ActOfAlreadySolved"
+                    text="Already Solved"
+                    description="Show already solved problem names for the current contest"/>/>
         </group>
     </actions>
 </idea-plugin>
