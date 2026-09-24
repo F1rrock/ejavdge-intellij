@@ -50,10 +50,22 @@
                     class="org.ejavdge.action.ActOfProblemDescription"
                     text="Problem Description"
                     description="Show description of current problem (comment like `# problem {PROB_NAME}` is required)"/>
-            <action id="EJavdge.ActOfAlreadySolved"
+            <action id="EJavdge.AlreadySolved"
                     class="org.ejavdge.action.ActOfAlreadySolved"
                     text="Already Solved"
-                    description="Show already solved problem names for the current contest"/>/>
+                    description="Show already solved problem names for the current contest"/>
+            <action id="EJavdge.AttachmentsDownload"
+                    class="org.ejavdge.action.ActOfAttachmentsDownload"
+                    text="Download Attachments"
+                    description="Download attachments of current problem"/>
+            <action id="EJavdge.LocalProbe"
+                    class="org.ejavdge.action.ActOfLocalProbe"
+                    text="Local Probe"
+                    description="Perform local testing of solution"/>
+            <action id="EJavdge.SilentSubmit"
+                    class="org.ejavdge.action.ActOfSilentSubmit"
+                    text="Silent Submit"
+                    description="Submit current file as solution"/>
         </group>
     </actions>
 </idea-plugin>

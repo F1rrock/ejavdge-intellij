@@ -3,31 +3,32 @@ package org.ejavdge.settings;
 import org.ejavdge.scalar.IntellijScalar;
 import org.ejavdge.app.setup.PresetDriver;
 import org.ejavdge.auth.Session;
-import org.ejavdge.contest.ContestResource;
+import org.ejavdge.contest.ContestForm;
 import org.ejavdge.error.IntellijError;
 import org.ejavdge.web.driver.WebDriver;
 
-public final class ResOfSettings implements IntellijScalar<ContestResource> {
+public final class FormOfSettings implements IntellijScalar<ContestForm> {
     private final WebDriver driver;
     private final EjState state;
 
-    public ResOfSettings(final EjState s) {
+    public FormOfSettings(final EjState s) {
         this(new PresetDriver(), s);
     }
 
-    public ResOfSettings(final WebDriver d, final EjState s) {
+    public FormOfSettings(final WebDriver d, final EjState s) {
         this.driver = d;
         this.state = s;
     }
 
     @Override
-    public ContestResource value() throws IntellijError {
-        return new ContestResource(
+    public ContestForm value() throws IntellijError {
+        final var location = new LocOfSettings(this.state).value();
+        return new ContestForm(
             this.driver,
-            new LocOfSettings(this.state).value(),
+            location,
             new Session(
                 this.driver,
-                new LocOfSettings(this.state).value(),
+                location,
                 new CredOfSettings(this.state).value()
             )
         );
