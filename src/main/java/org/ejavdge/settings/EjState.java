@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 )
 @SuppressWarnings("java:S1104")
 public final class EjState implements PersistentStateComponent<EjState> {
-    private static final String CLIENT_PATH = "/new-client";
     public String baseUrl;
     public int port;
     public String clientPath;
@@ -19,11 +18,7 @@ public final class EjState implements PersistentStateComponent<EjState> {
     public String login;
 
     public EjState() {
-        this.baseUrl = "10.21.17.68";
-        this.port = 80;
-        this.clientPath = CLIENT_PATH;
-        this.contestId = 1;
-        this.login = "";
+        new EjConfiguration().writeTo(this);
     }
 
     @Override
