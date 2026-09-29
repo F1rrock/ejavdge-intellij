@@ -3,6 +3,7 @@ package org.ejavdge.out;
 import com.intellij.execution.ui.ConsoleView;
 import com.intellij.execution.ui.ConsoleViewContentType;
 import org.ejavdge.error.InvariantViolation;
+import org.ejavdge.scalar.text.Concat;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.workspace.out.Out;
 
@@ -21,9 +22,8 @@ public final class IntellijConsole implements Out {
 
     @Override
     public void write(final Text text) throws InvariantViolation {
-        this.console.clear();
         this.console.print(
-            text.content(),
+            new Concat(text, new Text.Of("\n")).content(),
             this.type
         );
     }

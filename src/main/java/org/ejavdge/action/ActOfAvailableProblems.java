@@ -18,14 +18,14 @@ public final class ActOfAvailableProblems extends ActionWithReport {
 
     @Override
     public void perform(final @NotNull AnActionEvent e) {
+        final var console = new ProjectOf(e)
+            .value()
+            .getService(ConsoleWindow.class)
+            .console();
+        console.clear();
         new AvailableProblems(
             new ResOfSettings(this.state).value(),
-            new IntellijOut(
-                new ProjectOf(e)
-                    .value()
-                    .getService(ConsoleWindow.class)
-                    .console()
-            )
+            new IntellijOut(console)
         ).run();
     }
 }

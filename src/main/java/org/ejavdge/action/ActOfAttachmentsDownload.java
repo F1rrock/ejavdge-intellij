@@ -26,6 +26,10 @@ public final class ActOfAttachmentsDownload extends ActionWithReport {
     public void perform(final @NotNull AnActionEvent e) {
         ApplicationManager.getApplication().saveAll();
         final var project = new ProjectOf(e).value();
+        final var console = project
+            .getService(ConsoleWindow.class)
+            .console();
+        console.clear();
         new AppOfEffect(
             new WritingOf(
                 new Notice(
@@ -38,11 +42,7 @@ public final class ActOfAttachmentsDownload extends ActionWithReport {
                     ),
                     new Text.Of("Downloaded successfully!")
                 ),
-                new IntellijOut(
-                    project
-                        .getService(ConsoleWindow.class)
-                        .console()
-                )
+                new IntellijOut(console)
             )
         ).run();
     }

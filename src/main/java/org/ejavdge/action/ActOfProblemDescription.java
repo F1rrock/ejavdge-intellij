@@ -20,15 +20,15 @@ public final class ActOfProblemDescription extends ActionWithReport {
     @Override
     public void perform(final @NotNull AnActionEvent e) {
         ApplicationManager.getApplication().saveAll();
+        final var console = new ProjectOf(e)
+            .value()
+            .getService(ConsoleWindow.class)
+            .console();
+        console.clear();
         new ProblemDescription(
             new ResOfSettings(this.state).value(),
             new CurrentFile(e).value(),
-            new IntellijOut(
-                new ProjectOf(e)
-                    .value()
-                    .getService(ConsoleWindow.class)
-                    .console()
-            )
+            new IntellijOut(console)
         ).run();
     }
 }

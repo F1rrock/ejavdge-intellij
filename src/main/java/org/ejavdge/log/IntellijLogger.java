@@ -60,7 +60,7 @@ public final class IntellijLogger extends AbstractLogger {
 
     @Override
     public boolean isErrorEnabled(Marker marker) {
-        return false;
+        return this.isErrorEnabled();
     }
 
     @Override
@@ -74,7 +74,7 @@ public final class IntellijLogger extends AbstractLogger {
         final var text = this.substitute(message, arguments);
         switch (level) {
             case TRACE, DEBUG:
-                this.origin.debug(text);
+                this.origin.debug(text, throwable);
                 break;
             case INFO:
                 this.origin.info(text);

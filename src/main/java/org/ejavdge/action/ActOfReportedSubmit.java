@@ -2,7 +2,10 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
-import org.ejavdge.app.*;
+import org.ejavdge.app.LastReport;
+import org.ejavdge.app.ReportedSubmit;
+import org.ejavdge.app.SilentSubmit;
+import org.ejavdge.app.SubmitWithNotification;
 import org.ejavdge.app.setup.PresetDriver;
 import org.ejavdge.auth.Session;
 import org.ejavdge.contest.ContestForm;
@@ -10,53 +13,55 @@ import org.ejavdge.contest.ContestResource;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
-import org.ejavdge.scalar.text.Notice;
-import org.ejavdge.scalar.text.Text;
-import org.ejavdge.settings.*;
+import org.ejavdge.settings.CredOfSettings;
+import org.ejavdge.settings.EjState;
+import org.ejavdge.settings.LocOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
-import org.ejavdge.workspace.out.WritingOf;
 import org.jetbrains.annotations.NotNull;
 
-public final class ActOfSilentSubmit extends ActionWithReport {
+public final class ActOfReportedSubmit extends ActionWithReport {
     private final EjState state = ApplicationManager
         .getApplication()
         .getService(EjState.class);
 
     @Override
-    public void perform(final @NotNull AnActionEvent e) {
+    protected void perform(final @NotNull AnActionEvent e) {
         ApplicationManager.getApplication().saveAll();
         final var console = new ProjectOf(e)
             .value()
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
+        final var out = new IntellijOut(console);
         final var location = new LocOfSettings(this.state).value();
         final var session = new Session(
             new PresetDriver(),
             location,
             new CredOfSettings(this.state).value()
         );
-        new AppOfEffect(
-            new WritingOf(
-                new Notice(
-                    new RunningOf(
-                        new SilentSubmit(
-                            new CurrentFile(e).value(),
-                            new ContestForm(
-                                new PresetDriver(),
-                                location,
-                                session
-                            ),
-                            new ContestResource(
-                                new PresetDriver(),
-                                location,
-                                session
-                            )
-                        )
+        final var resource = new ContestResource(
+            new PresetDriver(),
+            location,
+            session
+        );
+        new ReportedSubmit(
+            new SubmitWithNotification(
+                new SilentSubmit(
+                    new CurrentFile(e).value(),
+                    new ContestForm(
+                        new PresetDriver(),
+                        location,
+                        session
                     ),
-                    new Text.Of("Sent!")
+                    resource
                 ),
-                new IntellijOut(console)
+                resource,
+                out
+            ),
+            new LastReport(
+                new CurrentFile(e).value(),
+                resource,
+                out
             )
         ).run();
     }

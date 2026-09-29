@@ -49,7 +49,7 @@
                     id="EJavdge.ProblemDescription"
                     class="org.ejavdge.action.ActOfProblemDescription"
                     text="Problem Description"
-                    description="Show description of current problem (comment like `# problem {PROB_NAME}` is required)"/>
+                    description="Show description of current problem"/>
             <action id="EJavdge.AlreadySolved"
                     class="org.ejavdge.action.ActOfAlreadySolved"
                     text="Already Solved"
@@ -62,10 +62,26 @@
                     class="org.ejavdge.action.ActOfLocalProbe"
                     text="Local Probe"
                     description="Perform local testing of solution"/>
+            <action id="EJavdge.LastReport"
+                    class="org.ejavdge.action.ActOfLastReport"
+                    text="Last Report"
+                    description="Show description of current problem"/>
             <action id="EJavdge.SilentSubmit"
                     class="org.ejavdge.action.ActOfSilentSubmit"
                     text="Silent Submit"
                     description="Submit current file as solution"/>
+            <action id="EJavdge.SubmitWithNotification"
+                    class="org.ejavdge.action.ActOfSubmitWithNotification"
+                    text="Submit With Notification"
+                    description="Submit current file as solution and send a notification when report is available"/>
+            <action id="EJavdge.ReportedSubmit"
+                    class="org.ejavdge.action.ActOfReportedSubmit"
+                    text="Reported Submit"
+                    description="Submit current file as solution and display the resulting report"/>
+            <action id="EJavdge.ProbedSubmit"
+                    class="org.ejavdge.action.ActOfProbedSubmit"
+                    text="Probed Submit"
+                    description="Probe current file against local examples, then submit it as solution and display the resulting report"/>
         </group>
     </actions>
 </idea-plugin>
