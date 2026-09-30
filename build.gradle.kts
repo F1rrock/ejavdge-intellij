@@ -43,6 +43,12 @@ tasks {
     }
 }
 
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
 dependencies {
     implementation("org.msubit:EJavdge:${property("ejavdgeVersion")}")
 }
