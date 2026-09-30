@@ -45,15 +45,15 @@
                     class="org.ejavdge.action.ActOfAvailableProblems"
                     text="Available Problems"
                     description="Show available problem names for the current contest"/>
+            <action id="EJavdge.AlreadySolved"
+                    class="org.ejavdge.action.ActOfAlreadySolved"
+                    text="Already Solved"
+                    description="Show already solved problem names for the current contest"/>
             <action
                     id="EJavdge.ProblemDescription"
                     class="org.ejavdge.action.ActOfProblemDescription"
                     text="Problem Description"
                     description="Show description of current problem"/>
-            <action id="EJavdge.AlreadySolved"
-                    class="org.ejavdge.action.ActOfAlreadySolved"
-                    text="Already Solved"
-                    description="Show already solved problem names for the current contest"/>
             <action id="EJavdge.AttachmentsDownload"
                     class="org.ejavdge.action.ActOfAttachmentsDownload"
                     text="Download Attachments"
@@ -65,7 +65,7 @@
             <action id="EJavdge.LastReport"
                     class="org.ejavdge.action.ActOfLastReport"
                     text="Last Report"
-                    description="Show description of current problem"/>
+                    description="Read the latest run's report, falling back to run information when the report is unavailable."/>
             <action id="EJavdge.SilentSubmit"
                     class="org.ejavdge.action.ActOfSilentSubmit"
                     text="Silent Submit"
