@@ -8,7 +8,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    maven { url = uri("https://jitpack.io") }
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -49,6 +49,8 @@ java {
     }
 }
 
+val ejavdgeVersion: String by project
+
 dependencies {
-    implementation("org.msubit:EJavdge:${property("ejavdgeVersion")}")
+    implementation("com.github.F1rrock:ejavdge:$ejavdgeVersion")
 }

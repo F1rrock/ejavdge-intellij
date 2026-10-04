@@ -87,10 +87,8 @@ On macOS or Linux:
 
 The installable ZIP archive is written to `build/distributions/`.
 
-The plugin depends on `org.msubit:EJavdge:<version>`. The version is configured
-by `ejavdgeVersion` in `gradle.properties`. If the build fails to resolve the
-core library, install it locally first by running `mvn install` in a checkout
-of the [EJavdge core repository](https://github.com/F1rrock/ejavdge).
+The plugin depends on `com.github.F1rrock:ejavdge:v1.0.1`, published to JitPack.
+The dependency is resolved automatically on first build.
 
 ## Installation
 
