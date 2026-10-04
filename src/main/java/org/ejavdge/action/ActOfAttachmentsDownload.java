@@ -1,20 +1,16 @@
 package org.ejavdge.action;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
-import org.ejavdge.app.AppOfEffect;
-import org.ejavdge.app.AttachmentsDownload;
-import org.ejavdge.app.RunningOf;
+import org.ejavdge.app.AttachmentsDownloadApp;
+import org.ejavdge.app.scenario.DownloadingOfAttachments;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
-import org.ejavdge.scalar.text.Notice;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
-import org.ejavdge.workspace.out.WritingOf;
 import org.jetbrains.annotations.NotNull;
 
 public final class ActOfAttachmentsDownload extends ActionWithReport {
@@ -30,20 +26,13 @@ public final class ActOfAttachmentsDownload extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new AppOfEffect(
-            new WritingOf(
-                new Notice(
-                    new RunningOf(
-                        new AttachmentsDownload(
-                            new ResOfSettings(this.state).value(),
-                            new CurrentFile(e).value(),
-                            new Text.Of(project.getBasePath())
-                        )
-                    ),
-                    new Text.Of("Downloaded successfully!")
-                ),
-                new IntellijOut(console)
-            )
+        new AttachmentsDownloadApp(
+            new DownloadingOfAttachments(
+                new ResOfSettings(this.state).value(),
+                new CurrentFile(e).value(),
+                new Text.Of(project.getBasePath())
+            ),
+            new IntellijOut(console)
         ).run();
     }
 }

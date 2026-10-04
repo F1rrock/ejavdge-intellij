@@ -3,18 +3,12 @@ package org.ejavdge.action;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
 import org.ejavdge.app.*;
-import org.ejavdge.app.setup.PresetDriver;
-import org.ejavdge.auth.Session;
-import org.ejavdge.contest.ContestForm;
-import org.ejavdge.contest.ContestResource;
+import org.ejavdge.app.scenario.SubmittingOfSolution;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
-import org.ejavdge.scalar.text.Notice;
-import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.*;
 import org.ejavdge.widget.ConsoleWindow;
-import org.ejavdge.workspace.out.WritingOf;
 import org.jetbrains.annotations.NotNull;
 
 public final class ActOfSilentSubmit extends ActionWithReport {
@@ -30,34 +24,13 @@ public final class ActOfSilentSubmit extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        final var location = new LocOfSettings(this.state).value();
-        final var session = new Session(
-            new PresetDriver(),
-            location,
-            new CredOfSettings(this.state).value()
-        );
-        new AppOfEffect(
-            new WritingOf(
-                new Notice(
-                    new RunningOf(
-                        new SilentSubmit(
-                            new CurrentFile(e).value(),
-                            new ContestForm(
-                                new PresetDriver(),
-                                location,
-                                session
-                            ),
-                            new ContestResource(
-                                new PresetDriver(),
-                                location,
-                                session
-                            )
-                        )
-                    ),
-                    new Text.Of("Sent!")
-                ),
-                new IntellijOut(console)
-            )
+        new SilentSubmitApp(
+            new SubmittingOfSolution(
+                new CurrentFile(e).value(),
+                new LocOfSettings(this.state).value(),
+                new CredOfSettings(this.state).value()
+            ),
+            new IntellijOut(console)
         ).run();
     }
 }

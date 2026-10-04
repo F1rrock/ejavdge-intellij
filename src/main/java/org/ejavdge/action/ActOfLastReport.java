@@ -1,10 +1,8 @@
 package org.ejavdge.action;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
-import org.ejavdge.app.LastReport;
-import org.ejavdge.app.ProblemDescription;
+import org.ejavdge.app.LastReportApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
@@ -26,7 +24,7 @@ public final class ActOfLastReport extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new LastReport(
+        new LastReportApp(
             new CurrentFile(e).value(),
             new ResOfSettings(this.state).value(),
             new IntellijOut(console)

@@ -1,9 +1,8 @@
 package org.ejavdge.action;
 
-import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
-import org.ejavdge.app.ProblemDescription;
+import org.ejavdge.app.ProblemDescriptionApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
@@ -25,7 +24,7 @@ public final class ActOfProblemDescription extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new ProblemDescription(
+        new ProblemDescriptionApp(
             new ResOfSettings(this.state).value(),
             new CurrentFile(e).value(),
             new IntellijOut(console)

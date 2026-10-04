@@ -2,21 +2,15 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
-import org.ejavdge.app.AppOfEffect;
-import org.ejavdge.app.AttachmentsDownload;
-import org.ejavdge.app.LocalProbe;
-import org.ejavdge.app.RunningOf;
-import org.ejavdge.effect.Sequence;
+import org.ejavdge.app.LocalProbeApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.file.JavaProgram;
 import org.ejavdge.out.IntellijOut;
-import org.ejavdge.scalar.text.Notice;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
-import org.ejavdge.workspace.out.WritingOf;
 import org.jetbrains.annotations.NotNull;
 
 public final class ActOfLocalProbe extends ActionWithReport {
@@ -28,37 +22,17 @@ public final class ActOfLocalProbe extends ActionWithReport {
     public void perform(final @NotNull AnActionEvent e) {
         ApplicationManager.getApplication().saveAll();
         final var project = new ProjectOf(e).value();
-        final var resource = new ResOfSettings(this.state).value();
-        final var file = new CurrentFile(e).value();
-        final var wd = new Text.Of(project.getBasePath());
         final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        final var out = new IntellijOut(console);
-        new AppOfEffect(
-            new Sequence(
-                new WritingOf(
-                    new Notice(
-                        new RunningOf(
-                            new AttachmentsDownload(
-                                resource,
-                                file,
-                                wd
-                            )
-                        ),
-                        new Text.Of("Downloaded successfully!")
-                    ),
-                    out
-                ),
-                new RunningOf(
-                    new LocalProbe(
-                        new JavaProgram(file, wd),
-                        resource,
-                        out
-                    )
-                )
-            )
+        new LocalProbeApp(
+            new JavaProgram(
+                new CurrentFile(e).value(),
+                new Text.Of(project.getBasePath())
+            ),
+            new ResOfSettings(this.state).value(),
+            new IntellijOut(console)
         ).run();
     }
 }
