@@ -26,6 +26,7 @@
         <toolWindow
                 id="EJavdge"
                 anchor="bottom"
+                icon="/icons/logo.png"
                 factoryClass="org.ejavdge.widget.EjToolWindow"/>
     </extensions>
     <actions>
@@ -46,7 +47,7 @@
                     text="Available Problems"
                     description="Show available problem names for the current contest"/>
             <action id="EJavdge.AlreadySolved"
-                    class="org.ejavdge.action.ActOfAlreadySolved"
+                    class="org.ejavdge.action.ActOfSolvedProblems"
                     text="Already Solved"
                     description="Show already solved problem names for the current contest"/>
             <action
