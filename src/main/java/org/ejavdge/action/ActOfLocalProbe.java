@@ -2,6 +2,7 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.LocalProbeApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
@@ -20,7 +21,7 @@ public final class ActOfLocalProbe extends ActionWithReport {
 
     @Override
     public void perform(final @NotNull AnActionEvent e) {
-        ApplicationManager.getApplication().saveAll();
+        FileDocumentManager.getInstance().saveAllDocuments();
         final var project = new ProjectOf(e).value();
         final var console = project
             .getService(ConsoleWindow.class)

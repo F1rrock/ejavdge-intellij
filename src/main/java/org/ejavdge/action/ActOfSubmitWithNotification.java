@@ -2,6 +2,7 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.SubmitWithNotificationApp;
 import org.ejavdge.app.scenario.SubmittingWithConfirmation;
 import org.ejavdge.event.CurrentFile;
@@ -20,7 +21,7 @@ public final class ActOfSubmitWithNotification extends ActionWithReport {
 
     @Override
     protected void perform(final @NotNull AnActionEvent e) {
-        ApplicationManager.getApplication().saveAll();
+        FileDocumentManager.getInstance().saveAllDocuments();
         final var console = new ProjectOf(e)
             .value()
             .getService(ConsoleWindow.class)

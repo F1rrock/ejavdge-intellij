@@ -19,7 +19,7 @@ public final class ActOfReportedSubmit extends ActionWithReport {
 
     @Override
     protected void perform(final @NotNull AnActionEvent e) {
-        ApplicationManager.getApplication().saveAll();
+        FileDocumentManager.getInstance().saveAllDocuments();
         final var console = new ProjectOf(e)
             .value()
             .getService(ConsoleWindow.class)

@@ -2,6 +2,7 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.SolvedProblemsApp;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
@@ -19,7 +20,7 @@ public final class ActOfSolvedProblems extends ActionWithReport {
 
     @Override
     public void perform(@NotNull AnActionEvent e) {
-        ApplicationManager.getApplication().saveAll();
+        FileDocumentManager.getInstance().saveAllDocuments();
         final var console = new ProjectOf(e)
             .value()
             .getService(ConsoleWindow.class)
