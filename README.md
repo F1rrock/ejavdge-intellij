@@ -5,6 +5,8 @@ An IntelliJ IDEA plugin for working with ejudge contests. It integrates the
 download attachments, test Java solutions locally, and submit the selected
 source file.
 
+![EJavdge in action: open the Tools menu, run a local probe, see the result](docs/screenshots/EjavdgeRoutine.gif)
+
 ## Requirements
 
 ### To build
@@ -21,6 +23,8 @@ source file.
 
 Actions are available under **Tools > EJavdge** and in the **EJavdge** toolbar
 menu. Output is displayed in the **EJavdge** tool window.
+
+![EJavdge actions in the Tools menu](docs/screenshots/EJavdgeTools.png)
 
 | Action                   | Purpose                                                                                  |
 |--------------------------|------------------------------------------------------------------------------------------|
@@ -99,6 +103,8 @@ of the [EJavdge core repository](https://github.com/F1rrock/ejavdge).
 
 Open **Settings > Tools > EJavdge** and configure the connection:
 
+![EJavdge settings in Settings > Tools > EJavdge](docs/screenshots/Credentials.png)
+
 | Setting     | Value                                                            |
 |-------------|------------------------------------------------------------------|
 | Base URL    | The ejudge server hostname or IP address, such as `10.21.17.68`. |
@@ -120,6 +126,8 @@ To add the EJavdge actions to the main toolbar:
 3. Choose **Plugins > EJavdge**, select an icon, and click **OK**.
 4. Click **Apply** and **OK** to save.
 
+![EJavdge icon on the main toolbar](docs/screenshots/Toolbar.png)
+
 ## Usage
 
 1. Open a project with a local directory and configure the contest connection.
@@ -134,6 +142,16 @@ To add the EJavdge actions to the main toolbar:
    one of the submit actions as needed.
 6. Open the **EJavdge** tool window to read command output and local test
    results.
+
+After **Download Attachments** and **Local Probe**, the tool window shows the
+downloaded files and the local test verdict:
+
+![Tool window showing downloaded attachments and a passing local probe](docs/screenshots/LocalProbe.png)
+
+After **Reported Submit** or **Last Report**, the tool window shows the eJudge
+report — the verdict, the failing test, and the running time:
+
+![Tool window showing an eJudge report](docs/screenshots/LastReport.png)
 
 ## Java Example
 
