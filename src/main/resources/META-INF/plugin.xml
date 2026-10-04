@@ -8,7 +8,16 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description>IntelliJ IDEA plugin for EJavdge — a thin client for submitting solutions to ejudge, running local tests, and viewing reports.</description>
+    <description><![CDATA[
+        <p>Work with ejudge contests directly from IntelliJ IDEA.</p>
+        <ul>
+            <li>Browse available and solved problems in the contest.</li>
+            <li>Read problem statements and download attachments.</li>
+            <li>Run solutions against sample tests locally, before submitting.</li>
+            <li>Submit source files with one action, with or without waiting for the report.</li>
+            <li>Read the judge's report in a dedicated tool window.</li>
+        </ul>
+    ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
