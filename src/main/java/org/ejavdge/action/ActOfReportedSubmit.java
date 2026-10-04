@@ -2,6 +2,7 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.ReportedSubmitApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
