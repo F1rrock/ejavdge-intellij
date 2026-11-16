@@ -2,9 +2,13 @@ package org.ejavdge.action;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.ui.Messages;
 import org.ejavdge.error.IntellijError;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
+import org.ejavdge.scalar.text.Text;
+import org.ejavdge.workspace.out.WritingOf;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public abstract class ActionWithReport extends AnAction {
     @Override
@@ -12,11 +16,10 @@ public abstract class ActionWithReport extends AnAction {
         try {
             this.perform(e);
         } catch (final IntellijError err) {
-            Messages.showErrorDialog(
-                e.getProject(),
-                err.getMessage(),
-                "Ejavdge"
-            );
+            new WritingOf(
+                new Text.Of(Objects.toString(err.getMessage(), err.toString())),
+                new EjavdgeErrorDialog(e.getProject())
+            ).perform();
         }
     }
 
