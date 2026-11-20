@@ -7,6 +7,7 @@ import org.ejavdge.app.LastReportApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
@@ -20,15 +21,19 @@ public final class ActOfLastReport extends ActionWithReport {
     @Override
     public void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new LastReportApp(
-            new CurrentFile(e).value(),
-            new ResOfSettings(this.state).value(),
-            new IntellijOut(console)
-        ).run();
+        new BackgroundAction(
+            new LastReportApp(
+                new CurrentFile(e).value(),
+                new ResOfSettings(this.state).value(),
+                new IntellijOut(console)
+            ),
+            "Last report",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

@@ -7,6 +7,7 @@ import org.ejavdge.app.ReportedSubmitApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.LocOfSettings;
@@ -21,18 +22,22 @@ public final class ActOfReportedSubmit extends ActionWithReport {
     @Override
     protected void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new ReportedSubmitApp(
-            new ReportedSubmitApp.Report(
-                new CurrentFile(e).value(),
-                new LocOfSettings(this.state).value(),
-                new CredOfSettings(this.state).value()
+        new BackgroundAction(
+            new ReportedSubmitApp(
+                new ReportedSubmitApp.Report(
+                    new CurrentFile(e).value(),
+                    new LocOfSettings(this.state).value(),
+                    new CredOfSettings(this.state).value()
+                ),
+                new IntellijOut(console)
             ),
-            new IntellijOut(console)
-        ).run();
+            "Reported submit",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

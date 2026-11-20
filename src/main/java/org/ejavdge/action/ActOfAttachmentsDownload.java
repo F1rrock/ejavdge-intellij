@@ -8,6 +8,7 @@ import org.ejavdge.app.scenario.DownloadingOfAttachments;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
@@ -27,13 +28,18 @@ public final class ActOfAttachmentsDownload extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new AttachmentsDownloadApp(
-            new DownloadingOfAttachments(
-                new ResOfSettings(this.state).value(),
-                new CurrentFile(e).value(),
-                new Text.Of(project.getBasePath())
+        new BackgroundAction(
+            new AttachmentsDownloadApp(
+                new DownloadingOfAttachments(
+                    new ResOfSettings(state).value(),
+                    new CurrentFile(e).value(),
+                    new Text.Of(project.getBasePath())
+                ),
+                new IntellijOut(console)
             ),
-            new IntellijOut(console)
-        ).run();
+            "Downloading of attachments",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
+
     }
 }

@@ -6,6 +6,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.SolvedProblemsApp;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.LocOfSettings;
@@ -21,15 +22,19 @@ public final class ActOfSolvedProblems extends ActionWithReport {
     @Override
     public void perform(@NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new SolvedProblemsApp(
-            new LocOfSettings(this.state).value(),
-            new CredOfSettings(this.state).value(),
-            new IntellijOut(console)
-        ).run();
+        new BackgroundAction(
+            new SolvedProblemsApp(
+                new LocOfSettings(this.state).value(),
+                new CredOfSettings(this.state).value(),
+                new IntellijOut(console)
+            ),
+            "Solved problems",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

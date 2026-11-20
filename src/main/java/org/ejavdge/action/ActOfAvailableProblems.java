@@ -5,7 +5,9 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.AvailableProblemsApp;
 import org.ejavdge.event.ProjectOf;
+import org.ejavdge.out.IntellijErrorDialog;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.LocOfSettings;
@@ -20,15 +22,19 @@ public final class ActOfAvailableProblems extends ActionWithReport {
     @Override
     public void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new AvailableProblemsApp(
-            new LocOfSettings(this.state).value(),
-            new CredOfSettings(this.state).value(),
-            new IntellijOut(console)
-        ).run();
+        new BackgroundAction(
+            new AvailableProblemsApp(
+                new LocOfSettings(this.state).value(),
+                new CredOfSettings(this.state).value(),
+                new IntellijOut(console)
+            ),
+            "Available problems",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

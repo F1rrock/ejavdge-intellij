@@ -8,6 +8,7 @@ import org.ejavdge.app.scenario.SubmittingWithConfirmation;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.LocOfSettings;
@@ -22,18 +23,22 @@ public final class ActOfSubmitWithNotification extends ActionWithReport {
     @Override
     protected void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new SubmitWithNotificationApp(
-            new SubmittingWithConfirmation(
-                new CurrentFile(e).value(),
-                new LocOfSettings(this.state).value(),
-                new CredOfSettings(this.state).value()
+        new BackgroundAction(
+            new SubmitWithNotificationApp(
+                new SubmittingWithConfirmation(
+                    new CurrentFile(e).value(),
+                    new LocOfSettings(this.state).value(),
+                    new CredOfSettings(this.state).value()
+                ),
+                new IntellijOut(console)
             ),
-            new IntellijOut(console)
-        ).run();
+            "Submit with notification",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

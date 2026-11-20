@@ -8,6 +8,7 @@ import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.file.JavaProgram;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
@@ -23,24 +24,25 @@ public final class ActOfProbedSubmit extends ActionWithReport {
     @Override
     protected void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new ProbedSubmitApp(
-            new ProbedSubmitApp.Report(
-                new JavaProgram(
-                    new CurrentFile(e).value(),
-                    new Text.Of(
-                        new ProjectOf(e).value()
-                            .getBasePath()
-                    )
+        new BackgroundAction(
+            new ProbedSubmitApp(
+                new ProbedSubmitApp.Report(
+                    new JavaProgram(
+                        new CurrentFile(e).value(),
+                        new Text.Of(project.getBasePath())
+                    ),
+                    new LocOfSettings(this.state).value(),
+                    new CredOfSettings(this.state).value()
                 ),
-                new LocOfSettings(this.state).value(),
-                new CredOfSettings(this.state).value()
+                new IntellijOut(console)
             ),
-            new IntellijOut(console)
-        ).run();
+            "Probed submit",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

@@ -8,6 +8,7 @@ import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.file.JavaProgram;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
@@ -27,13 +28,17 @@ public final class ActOfLocalProbe extends ActionWithReport {
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new LocalProbeApp(
-            new JavaProgram(
-                new CurrentFile(e).value(),
-                new Text.Of(project.getBasePath())
+        new BackgroundAction(
+            new LocalProbeApp(
+                new JavaProgram(
+                    new CurrentFile(e).value(),
+                    new Text.Of(project.getBasePath())
+                ),
+                new ResOfSettings(this.state).value(),
+                new IntellijOut(console)
             ),
-            new ResOfSettings(this.state).value(),
-            new IntellijOut(console)
-        ).run();
+            "Local probe",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

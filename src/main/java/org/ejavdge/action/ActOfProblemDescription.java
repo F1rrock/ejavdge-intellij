@@ -7,6 +7,7 @@ import org.ejavdge.app.ProblemDescriptionApp;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
@@ -20,15 +21,19 @@ public final class ActOfProblemDescription extends ActionWithReport {
     @Override
     public void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new ProblemDescriptionApp(
-            new ResOfSettings(this.state).value(),
-            new CurrentFile(e).value(),
-            new IntellijOut(console)
-        ).run();
+        new BackgroundAction(
+            new ProblemDescriptionApp(
+                new ResOfSettings(this.state).value(),
+                new CurrentFile(e).value(),
+                new IntellijOut(console)
+            ),
+            "Problem description",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }

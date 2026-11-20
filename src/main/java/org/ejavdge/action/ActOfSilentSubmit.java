@@ -8,6 +8,7 @@ import org.ejavdge.app.scenario.SubmittingOfSolution;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
+import org.ejavdge.out.preset.EjavdgeErrorDialog;
 import org.ejavdge.settings.*;
 import org.ejavdge.widget.ConsoleWindow;
 import org.jetbrains.annotations.NotNull;
@@ -20,18 +21,22 @@ public final class ActOfSilentSubmit extends ActionWithReport {
     @Override
     public void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
-        final var console = new ProjectOf(e)
-            .value()
+        final var project = new ProjectOf(e).value();
+        final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
-        new SilentSubmitApp(
-            new SubmittingOfSolution(
-                new CurrentFile(e).value(),
-                new LocOfSettings(this.state).value(),
-                new CredOfSettings(this.state).value()
+        new BackgroundAction(
+            new SilentSubmitApp(
+                new SubmittingOfSolution(
+                    new CurrentFile(e).value(),
+                    new LocOfSettings(this.state).value(),
+                    new CredOfSettings(this.state).value()
+                ),
+                new IntellijOut(console)
             ),
-            new IntellijOut(console)
-        ).run();
+            "Silent submit",
+            new EjavdgeErrorDialog(project)
+        ).actionPerformed(e);
     }
 }
