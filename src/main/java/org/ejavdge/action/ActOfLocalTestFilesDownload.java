@@ -3,8 +3,8 @@ package org.ejavdge.action;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import org.ejavdge.app.AttachmentsDownloadApp;
-import org.ejavdge.app.scenario.DownloadingOfAttachments;
+import org.ejavdge.app.LocalTestFilesDownloadApp;
+import org.ejavdge.app.scenario.DownloadingOfLocalTestFiles;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
 import org.ejavdge.out.IntellijOut;
@@ -15,7 +15,7 @@ import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
 import org.jetbrains.annotations.NotNull;
 
-public final class ActOfAttachmentsDownload extends ActionWithReport {
+public final class ActOfLocalTestFilesDownload extends ActionWithReport {
     private final EjState state = ApplicationManager
         .getApplication()
         .getService(EjState.class);
@@ -29,8 +29,8 @@ public final class ActOfAttachmentsDownload extends ActionWithReport {
             .console();
         console.clear();
         new BackgroundAction(
-            new AttachmentsDownloadApp(
-                new DownloadingOfAttachments(
+            new LocalTestFilesDownloadApp(
+                new DownloadingOfLocalTestFiles(
                     new ResOfSettings(state).value(),
                     new CurrentFile(e).value(),
                     new Text.Of(project.getBasePath())

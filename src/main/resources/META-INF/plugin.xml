@@ -65,7 +65,7 @@
                     text="Problem Description"
                     description="Show description of current problem"/>
             <action id="EJavdge.AttachmentsDownload"
-                    class="org.ejavdge.action.ActOfAttachmentsDownload"
+                    class="org.ejavdge.action.ActOfLocalTestFilesDownload"
                     text="Download Attachments"
                     description="Download attachments of current problem"/>
             <action id="EJavdge.LocalProbe"
