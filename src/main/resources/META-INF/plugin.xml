@@ -23,9 +23,8 @@
         <ul>
             <li>Run contest actions in the background and show failures in an EJavdge error dialog.</li>
             <li>Use Probed Submit to run samples before submitting the original source.</li>
-            <li>Run samples with the problem's optional Java header and footer.</li>
             <li>Download Local Test files to the solution's Sources Root and run local checks from there.</li>
-            <li>Fix problem attachment downloads and exclude Notes from expected sample output.</li>
+            <li>Update the EJavdge dependency to v1.0.2.</li>
         </ul>
     ]]></change-notes>
 
