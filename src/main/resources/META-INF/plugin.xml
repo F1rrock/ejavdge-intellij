@@ -12,12 +12,22 @@
         <p>Work with ejudge contests directly from IntelliJ IDEA.</p>
         <ul>
             <li>Browse available and solved problems in the contest.</li>
-            <li>Read problem statements and download attachments.</li>
+            <li>Read problem statements and download Local Test files.</li>
             <li>Run solutions against sample tests locally, before submitting.</li>
             <li>Submit source files with one action, with or without waiting for the report.</li>
             <li>Read the judge's report in a dedicated tool window.</li>
         </ul>
     ]]></description>
+
+    <change-notes><![CDATA[
+        <ul>
+            <li>Run contest actions in the background and show failures in an EJavdge error dialog.</li>
+            <li>Use Probed Submit to run samples before submitting the original source.</li>
+            <li>Run samples with the problem's optional Java header and footer.</li>
+            <li>Download Local Test files to the solution's Sources Root and run local checks from there.</li>
+            <li>Fix problem attachment downloads and exclude Notes from expected sample output.</li>
+        </ul>
+    ]]></change-notes>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -64,10 +74,10 @@
                     class="org.ejavdge.action.ActOfProblemDescription"
                     text="Problem Description"
                     description="Show description of current problem"/>
-            <action id="EJavdge.AttachmentsDownload"
+            <action id="EJavdge.LocalTestFilesDownload"
                     class="org.ejavdge.action.ActOfLocalTestFilesDownload"
-                    text="Download Attachments"
-                    description="Download attachments of current problem"/>
+                    text="Download Local Test Files"
+                    description="Download the current problem's Local Test files"/>
             <action id="EJavdge.LocalProbe"
                     class="org.ejavdge.action.ActOfLocalProbe"
                     text="Local Probe"

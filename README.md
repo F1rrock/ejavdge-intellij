@@ -2,7 +2,7 @@
 
 An IntelliJ IDEA plugin for working with ejudge contests. It integrates the
 [EJavdge](https://github.com/F1rrock/ejavdge) core library to browse problems,
-download attachments, test Java solutions locally, and submit the selected
+download Local Test files, test Java solutions locally, and submit the selected
 source file.
 
 ![EJavdge in action: open the Tools menu, run a local probe, see the result](docs/screenshots/EjavdgeRoutine.gif)
@@ -11,18 +11,18 @@ source file.
 
 ### To build
 - JDK 17.
-- IntelliJ IDEA within the declared platform build range: `232`–`242`
-  (2023.2 through 2024.2).
-- A Gradle 8.9 wrapper is included, so a Gradle installation is not required.
+- A Gradle 9.8.0 wrapper is included, so a Gradle installation is not required.
 
 ### To use
+- IntelliJ IDEA 2023.3 (build 233) or newer.
 - A compatible ejudge contest and account for actions that access the server.
 - A JDK available for compiling and running Java solutions.
 
 ## Features
 
 Actions are available under **Tools > EJavdge** and in the **EJavdge** toolbar
-menu. Output is displayed in the **EJavdge** tool window.
+menu. Contest actions run in the background. Output is displayed in the
+**EJavdge** tool window and errors are shown in a dialog.
 
 ![EJavdge actions in the Tools menu](docs/screenshots/EJavdgeTools.png)
 
@@ -31,8 +31,8 @@ menu. Output is displayed in the **EJavdge** tool window.
 | Available Problems       | List problems in the configured contest.                                                 |
 | Already Solved           | List problems already solved by the configured account.                                  |
 | Problem Description      | Display the statement for the problem identified in the selected file.                   |
-| Download Attachments     | Download the selected problem's attachments to the project directory.                    |
-| Local Probe              | Download attachments and run local tests for the selected Java solution.                 |
+| Download Local Test Files | Download the selected problem's Local Test files to the solution's Sources Root.          |
+| Local Probe               | Run the selected Java solution against the problem's samples with its optional template.  |
 | Last Report              | Print the latest run's report, falling back to run information when the report is empty. |
 | Silent Submit            | Submit the selected file without waiting for the result.                                 |
 | Submit With Notification | Submit the selected file and notify when the report is ready.                            |
@@ -46,16 +46,20 @@ menu. Output is displayed in the **EJavdge** tool window.
 2. Use **Available Problems** to see the list of problems.
 3. Use **Already Solved** to see which ones have already been solved.
 
-### Read a problem and its attachments
+### Read a problem and download its Local Test files
 1. Open the source file that contains the problem marker.
 2. Use **Problem Description** to read the statement.
-3. Use **Download Attachments** to save the problem's files into the project
-   directory, so a solution that reads them works locally.
+3. Use **Download Local Test Files** to save files linked for local testing
+   into the selected solution's Sources Root. Local checks use that directory
+   as their working directory, so relative paths can find the downloaded files.
 
 ### Test a solution locally
 1. Open the source file with the problem marker.
 2. Use **Local Probe** to compile and run the solution against the problem's
    sample tests. The result is printed in the **EJavdge** tool window.
+   If the problem provides attachments such as `HeaderOfA.java` or
+   `FooterOfA.java`, the probe adds them to the source for local execution.
+   **Probed Submit** still sends the original file to ejudge.
 
 ### Submit a solution
 Pick the action that matches how much feedback you want:
@@ -87,15 +91,16 @@ On macOS or Linux:
 
 The installable ZIP archive is written to `build/distributions/`.
 
-The plugin depends on `com.github.F1rrock:ejavdge:v1.0.1`, published to JitPack.
+The plugin depends on `com.github.F1rrock:ejavdge:v1.0.2`, published to JitPack.
 The dependency is resolved automatically on first build.
 
 ## Installation
 
-1. Build the plugin archive (see above).
+1. Download the ZIP from [GitHub Releases](https://github.com/F1rrock/ejavdge-intellij/releases)
+   or build it locally (see above).
 2. Open **Settings > Plugins** in IntelliJ IDEA.
 3. Open the gear menu and select **Install Plugin from Disk**.
-4. Select the ZIP from `build/distributions/` and restart the IDE.
+4. Select the ZIP and restart the IDE.
 
 ## Configuration
 
@@ -136,15 +141,15 @@ To add the EJavdge actions to the main toolbar:
 // problem: A
 ```
 4. Select the solution file in the editor or in the Project view.
-5. Use **Problem Description**, **Download Attachments**, **Local Probe**, or
+5. Use **Problem Description**, **Download Local Test Files**, **Local Probe**, or
    one of the submit actions as needed.
 6. Open the **EJavdge** tool window to read command output and local test
    results.
 
-After **Download Attachments** and **Local Probe**, the tool window shows the
+After **Download Local Test Files** and **Local Probe**, the tool window shows the
 downloaded files and the local test verdict:
 
-![Tool window showing downloaded attachments and a passing local probe](docs/screenshots/LocalProbe.png)
+![Tool window showing downloaded files and a passing local probe](docs/screenshots/LocalProbe.png)
 
 After **Reported Submit** or **Last Report**, the tool window shows the eJudge
 report — the verdict, the failing test, and the running time:
@@ -187,13 +192,14 @@ Use one of the submit actions when the solution is ready.
 
 ## Troubleshooting
 
-- **The build fails to resolve the EJavdge core library.** Install it locally
-  first: run `mvn install` in a checkout of the
-  [EJavdge core repository](https://github.com/F1rrock/ejavdge).
+- **The build fails to resolve the EJavdge core library.** Check that Gradle
+  can reach JitPack, then retry with `./gradlew buildPlugin --refresh-dependencies`.
 - **An action does not appear under Tools.** Check that the plugin is enabled
   in **Settings > Plugins** and restart the IDE.
 - **Local Probe reports that `java` is not found.** Make sure a JDK is
   installed and its `bin` directory is on `PATH`.
+- **The current file is outside the source roots.** Select a file under a folder
+  marked as **Sources Root** in the IDE.
 - **Submission is rejected with an unexpected status.** Verify the
   **Base URL**, **Port**, **Client path**, and **Contest ID** in
   **Settings > Tools > EJavdge**.
