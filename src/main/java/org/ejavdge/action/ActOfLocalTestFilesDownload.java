@@ -7,9 +7,9 @@ import org.ejavdge.app.LocalTestFilesDownloadApp;
 import org.ejavdge.app.scenario.DownloadingOfLocalTestFiles;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
+import org.ejavdge.event.SourceRootOf;
 import org.ejavdge.out.IntellijOut;
 import org.ejavdge.out.preset.EjavdgeErrorDialog;
-import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.ResOfSettings;
 import org.ejavdge.widget.ConsoleWindow;
@@ -33,11 +33,11 @@ public final class ActOfLocalTestFilesDownload extends ActionWithReport {
                 new DownloadingOfLocalTestFiles(
                     new ResOfSettings(state).value(),
                     new CurrentFile(e).value(),
-                    new Text.Of(project.getBasePath())
+                    new SourceRootOf(e).value()
                 ),
                 new IntellijOut(console)
             ),
-            "Downloading of attachments",
+            "Downloading Local Test files",
             new EjavdgeErrorDialog(project)
         ).actionPerformed(e);
 

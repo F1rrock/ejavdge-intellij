@@ -6,10 +6,10 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import org.ejavdge.app.*;
 import org.ejavdge.event.CurrentFile;
 import org.ejavdge.event.ProjectOf;
+import org.ejavdge.event.SourceRootOf;
 import org.ejavdge.file.JavaProgram;
 import org.ejavdge.out.IntellijOut;
 import org.ejavdge.out.preset.EjavdgeErrorDialog;
-import org.ejavdge.scalar.text.Text;
 import org.ejavdge.settings.CredOfSettings;
 import org.ejavdge.settings.EjState;
 import org.ejavdge.settings.LocOfSettings;
@@ -34,7 +34,7 @@ public final class ActOfProbedSubmit extends ActionWithReport {
                 new ProbedSubmitApp.Report(
                     new JavaProgram(
                         new CurrentFile(e).value(),
-                        new Text.Of(project.getBasePath())
+                        new SourceRootOf(e).value()
                     ),
                     new LocOfSettings(this.state).value(),
                     new CredOfSettings(this.state).value()
