@@ -24,18 +24,22 @@ public final class ActOfLocalTestFilesDownload extends ActionWithReport {
     public void perform(final @NotNull AnActionEvent e) {
         FileDocumentManager.getInstance().saveAllDocuments();
         final var project = new ProjectOf(e).value();
+        final var directory = new SourceRootOf(e).value();
         final var console = project
             .getService(ConsoleWindow.class)
             .console();
         console.clear();
         new BackgroundAction(
-            new LocalTestFilesDownloadApp(
-                new DownloadingOfLocalTestFiles(
-                    new ResOfSettings(state).value(),
-                    new CurrentFile(e).value(),
-                    new SourceRootOf(e).value()
+            new WithDirectoryRefresh(
+                new LocalTestFilesDownloadApp(
+                    new DownloadingOfLocalTestFiles(
+                        new ResOfSettings(state).value(),
+                        new CurrentFile(e).value(),
+                        directory
+                    ),
+                    new IntellijOut(console)
                 ),
-                new IntellijOut(console)
+                directory
             ),
             "Downloading Local Test files",
             new EjavdgeErrorDialog(project)
